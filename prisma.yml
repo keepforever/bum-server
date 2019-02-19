@@ -1,4 +1,4 @@
-# endpoint: https://us1.prisma.sh/brian-cilenti-1f9206/goon-3/dev
+# endpoint: https://us1.prisma.sh/<end-point>
 endpoint: ${env:DATABASE_SERVER}
 
 datamodel: datamodel.prisma

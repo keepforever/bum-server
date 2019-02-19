@@ -18,58 +18,60 @@ type Mutation {
   ):Boolean!
 }
 
-
 # hack so DateTime dosen't throw error
 scalar DateTime
 
 # redefinition minus directives
 type User {
-  id: ID!
+  id: ID! @unique
   name: String!
-  email: String!
+  email: String! @unique
   password: String!
-  isSeller: Boolean
+  isAdmin: Boolean @default(value: "false")
   userInfo: UserInfo
+  decks: [Deck!]!
+  votes: [Vote!]!
   userSettings: UserSettings
-  sellerInfo: SellerInfo
-  connections: [Connection!]
-  inbox: [Message!]
-  outbox: [Message!]
+  connections: [Connection!]!
+  inbox: [Message!]! @relation(name: "RecievedMessages" , onDelete: SET_NULL)
+  outbox: [Message!]! @relation(name: "WrittenMessages" , onDelete: SET_NULL)
   createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Deck {
+  id: ID! @unique
+  author: User!
+  deckList: String!
+  score: Int! @default(value: "0" )
+}
+
+type Vote {
+  id: ID! @unique
+  deck: Deck!
+  quality: Boolean!
 }
 
 type UserInfo {
-  id: ID!
+  id: ID! @unique
   user: User!
   about: String!
-  interests: [String!]!
-  age: Int!
-  zipCode: Int!
+  timeZone: String!
 }
 
 type UserSettings {
-  id: ID!
+  id: ID! @unique
   user: User!
-  darkMode: Boolean
-  autoAccept: Boolean
-}
-
-## SELLER ##
-type SellerInfo {
-  id: ID!
-  seller: User!
-  about: String!
-  offerings: [String!]!
-  age: Int!
-  zipCode: Int!
+  darkMode: Boolean @default(value: "false")
+  autoAccept: Boolean @default(value: "false")
 }
 
 ## Messages ##
 type Message {
-  id: ID!
-  author: User!
-  recipient: User!
-  type: String!
+  id: ID! @unique
+  author: User! @relation(name: "WrittenMessages", onDelete: SET_NULL)
+  recipient: User! @relation(name: "RecievedMessages" , onDelete: SET_NULL)
+  type: String! @default(value: "default-message-type")
   text: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -77,12 +79,12 @@ type Message {
 
 # User to User
 type Connection {
-  id: ID!
-  allowance: Int!
+  id: ID! @unique
+  allowance: Int! @default(value: "42" )
   friend: User!
-  about: String!
-  verified: Boolean
-  accepted: Boolean
+  about: String! @default(value: "default-friends-because")
+  verified: Boolean @default(value: "false")
+  accepted: Boolean @default(value: "false")
   createdAt: DateTime!
   updatedAt: DateTime!
 }

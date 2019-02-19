@@ -3,23 +3,36 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  isSeller: Boolean @default(value: "false")
+  isAdmin: Boolean @default(value: "false")
   userInfo: UserInfo
+  decks: [Deck!]!
+  votes: [Vote!]!
   userSettings: UserSettings
-  sellerInfo: SellerInfo
   connections: [Connection!]!
   inbox: [Message!]! @relation(name: "RecievedMessages" , onDelete: SET_NULL)
   outbox: [Message!]! @relation(name: "WrittenMessages" , onDelete: SET_NULL)
   createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Deck {
+  id: ID! @unique
+  author: User!
+  deckList: String!
+  score: Int! @default(value: "0" )
+}
+
+type Vote {
+  id: ID! @unique
+  deck: Deck!
+  quality: Boolean!
 }
 
 type UserInfo {
   id: ID! @unique
   user: User!
   about: String!
-  interests: [String!]!
-  age: Int!
-  zipCode: Int!
+  timeZone: String!
 }
 
 type UserSettings {
@@ -27,16 +40,6 @@ type UserSettings {
   user: User!
   darkMode: Boolean @default(value: "false")
   autoAccept: Boolean @default(value: "false")
-}
-
-## SELLER ##
-type SellerInfo {
-  id: ID! @unique
-  seller: User!
-  about: String!
-  offerings: [String!]!
-  age: Int!
-  zipCode: Int!
 }
 
 ## Messages ##
@@ -53,7 +56,7 @@ type Message {
 # User to User
 type Connection {
   id: ID! @unique
-  allowance: Int!
+  allowance: Int! @default(value: "42" )
   friend: User!
   about: String! @default(value: "default-friends-because")
   verified: Boolean @default(value: "false")
