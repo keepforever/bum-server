@@ -1,0 +1,26 @@
+const { userSignup } = require("./userSignup");
+const { login } = require("./login");
+const { refreshToken } = require("./refreshToken");
+const { userSettings } = require("./userSettings");
+const { sendMessage } = require("./sendMessage");
+
+
+const m = {
+  async userSignup(parent, args, ctx) {
+    return await userSignup(parent, args, ctx);
+  },
+  async login(parent, args, ctx) {
+    return await login(parent, args, ctx);
+  },
+  async refreshToken(parent, args, ctx) {
+    return await refreshToken(parent, args, ctx);
+  },
+  async userSettings(parent, args, ctx) {
+    return await userSettings(parent, args, ctx);
+  },
+  async sendMessage(parent, args, ctx) {
+    return await sendMessage(parent, args, ctx);
+  },
+};
+
+module.exports = { m };

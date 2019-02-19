@@ -1,0 +1,114 @@
+type Query {
+  me: User
+}
+
+type Mutation {
+  sendMessage(recipient: ID!, type: String!, text: String!): Boolean!
+  refreshToken: RefreshTokenPayload!
+  login(email: String!, password: String!): UserLoginResponse!
+  userSignup(
+    name: String!
+    email: String!
+    isSeller: Boolean!
+    password: String!
+  ): UserAuthPayload!
+  userSettings(
+    darkMode: Boolean!
+    autoAccept: Boolean!
+  ):Boolean!
+}
+
+
+# hack so DateTime dosen't throw error
+scalar DateTime
+
+# redefinition minus directives
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  isSeller: Boolean
+  userInfo: UserInfo
+  userSettings: UserSettings
+  sellerInfo: SellerInfo
+  connections: [Connection!]
+  inbox: [Message!]
+  outbox: [Message!]
+  createdAt: DateTime!
+}
+
+type UserInfo {
+  id: ID!
+  user: User!
+  about: String!
+  interests: [String!]!
+  age: Int!
+  zipCode: Int!
+}
+
+type UserSettings {
+  id: ID!
+  user: User!
+  darkMode: Boolean
+  autoAccept: Boolean
+}
+
+## SELLER ##
+type SellerInfo {
+  id: ID!
+  seller: User!
+  about: String!
+  offerings: [String!]!
+  age: Int!
+  zipCode: Int!
+}
+
+## Messages ##
+type Message {
+  id: ID!
+  author: User!
+  recipient: User!
+  type: String!
+  text: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# User to User
+type Connection {
+  id: ID!
+  allowance: Int!
+  friend: User!
+  about: String!
+  verified: Boolean
+  accepted: Boolean
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+#############################################
+#### Original schema.graphql below here #####
+#############################################
+
+## utility types ##
+
+type UserLoginResponse {
+  payload: UserAuthPayload
+  error: Error
+}
+
+type RefreshTokenPayload {
+  token: String!
+  userId: String!
+}
+
+type UserAuthPayload {
+  token: String!
+  user: User!
+}
+
+type Error {
+  field: String!
+  msg: String!
+}
