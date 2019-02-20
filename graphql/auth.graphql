@@ -1,44 +1,10 @@
-mutation mySellerLogin {
-  sellerLogin(
-    email: "s",
-    password: "s") {
-    payload{
-      token
-      seller{
-        id
-        name
-      }
-    }
-    error{
-      msg
-      field
-    }
-  }
-}
-
-mutation myUserLogin {
-  userLogin(
-    email: "b",
-    password: "b") {
-    payload{
-      token
-      user{
-        id
-        name
-      }
-    }
-    error{
-      msg
-      field
-    }
-  }
-}
-
+# Write your query or mutation here
 mutation myUserSignUp {
   userSignup(
-    name:"b", 
+    name:"b",
     email:"b",
-    password:"b"
+    password:"b",
+    isAdmin:true
   ) {
     user{
       id
@@ -48,16 +14,23 @@ mutation myUserSignUp {
   }
 }
 
-mutation mySellerSignUp {
-  sellerSignup(
-    name:"s", 
-    email:"s",
-    password:"s"
-  ) {
-    seller{
-      id
-      name
+mutation myUserLogin {
+  login(
+    email: "b",
+    password: "b") {
+    payload{
+      token
+      user{
+        id
+        name
+        decks{
+          id
+        }
+      }
     }
-    token
+    error{
+      msg
+      field
+    }
   }
 }

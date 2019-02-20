@@ -1,4 +1,26 @@
+# Relational Data
 
+### By default, fetching a user's data by id returns only scalar data.  If you want to provide raw graphql to specify relational AND scalar fields to be returned, `prisma-client` provides a `$.fragment(yourFragment)` method to do this
+
+```js
+// "UserWithDecks" is the name of the fragment and can be
+// anything when composing a fragment.  However, "User" must
+// be the type to which the raw graphql applies.
+
+const fragment = `
+  fragment UserWithDecks on User {
+    id
+    name
+    email
+    decks {
+      id
+    }
+  }
+  `;
+// find user by email lookup and return data as specified in
+// the fragment defined above.
+const fragmentUser = await ctx.prisma.user({ email }).$fragment(fragment);
+```
 
 ## To redeploy
 ```sh
