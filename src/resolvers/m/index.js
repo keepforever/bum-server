@@ -3,9 +3,13 @@ const { login } = require("./login");
 const { refreshToken } = require("./refreshToken");
 const { userSettings } = require("./userSettings");
 const { sendMessage } = require("./sendMessage");
+const { addCard } = require("./addCard");
 
 
 const m = {
+  async addCard(parent, args, ctx) {
+    return await addCard(parent, args, ctx);
+  },
   async userSignup(parent, args, ctx) {
     return await userSignup(parent, args, ctx);
   },

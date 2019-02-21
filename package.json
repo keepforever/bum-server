@@ -17,6 +17,7 @@
     "dotenv": "^6.2.0",
     "graphql-yoga": "^1.17.4",
     "jsonwebtoken": "^8.4.0",
+    "mtgsdk": "^0.4.2",
     "prisma-client-lib": "^1.26.6"
   },
   "devDependencies": {
