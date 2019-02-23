@@ -50,7 +50,7 @@ async function addCard(parent, args, ctx) {
     deck.push(card)
 
     if(deck.length === cardsArray.length){
-      console.log('equal = ', '\n' )
+      console.log('done', '\n' )
       return false
     }
 
