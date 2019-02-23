@@ -5,7 +5,7 @@ type Query {
 }
 
 type Mutation {
-  addCard: Boolean!
+  addCard: String!
   sendMessage(recipient: ID!, type: String!, text: String!): Boolean!
   refreshToken: RefreshTokenPayload!
   login(email: String!, password: String!): UserLoginResponse!

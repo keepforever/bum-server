@@ -1,63 +1,73 @@
 const bcrypt = require("bcryptjs");
 const mtg = require("mtgsdk");
-const { clearLog } = require("../../utils");
+const { clearLog, isBasicLand } = require("../../utils");
 const { testDeck } = require("./boiler/testString");
 
-async function addCard(parent, args, ctx) {
 
+async function addCard(parent, args, ctx) {
   let deck = [];
   let deckMap = {};
+  let count = 0
 
-  const cardsArray = testDeck.split("\n")
-  cardsArray.forEach(async (c, i) => {
-    console.log(`card ${i}`, '\n' )
+  let cardsArray = testDeck.split("\n");
+
+
+
+  for (const c of cardsArray) {
     // extract quantity from leading numbers
     const quantity = c.match(/[0-9]*/);
-    const editCard  = c.replace(/ *\([^)]*\) */g, "");
-    const cardName = editCard.replace(/[0-9]/g, "").trim()
+    const editCard = c.replace(/ *\([^)]*\) */g, "");
+    const cardName = editCard.replace(/[0-9]/g, "").trim();
 
-    let fetchedCard;
-    try {
-      fetchedCard = await mtg.card.where({
-        name: `${cardName}`,
-        pageSize: 1
-      });
-    } catch (e) {
-      console.log("e = ", e, "\n");
+    if(isBasicLand(cardName)){
+      const card = {
+        name,
+        quantity,
+        type: "basic land"
+      };
+      deckMap[card.name] = card
+      count++
+    } else {
+      let fetchedCard;
+      try {
+        fetchedCard = await mtg.card.where({
+          name: `${cardName}`,
+          pageSize: 1
+        });
+      } catch (e) {
+        console.log("e = ", e, "\n");
+      }
+
+      const { name, manaCost, colors, type, rarity, text } = fetchedCard[0];
+
+      const card = {
+        name,
+        manaCost,
+        colors,
+        type,
+        rarity,
+        text,
+        quantity
+      };
+
+      deckMap[card.name] = card
+      count++
+      console.log('count = ', count, '\n' )
+
     }
 
-    const {
-      name,
-      manaCost,
-      colors,
-      type,
-      rarity,
-      text,
-    } = fetchedCard[0]
+  }
 
-    const card = {
-      name,
-      manaCost,
-      colors,
-      type,
-      rarity,
-      text,
-      quantity
-    };
+  console.log('deckMap length = ', Object.keys(deckMap), '\n' )
 
-    console.log(`card name ${i} = `, card.name, '\n' )
+  console.log('cardsArray.length = ', cardsArray, '\n' )
 
-    deck.push(card)
-
-    if(deck.length === cardsArray.length){
-      console.log('done', '\n' )
-      return false
-    }
-
-  })
-
-  console.log('deck = ', deck, '\n' )
-
+  if (Object.keys(deckMap).length === cardsArray.length) {
+    console.log("done", "\n");
+    return JSON.stringify(deckMap);
+  } else {
+    return "something went wrong"
+  }
 
   return true;
 }
