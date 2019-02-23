@@ -10,7 +10,7 @@ async function addCard(parent, args, ctx) {
 
   const cardsArray = testDeck.split("\n")
   cardsArray.forEach(async (c, i) => {
-    console.log(`c ${i}`, '\n' )
+    console.log(`card ${i}`, '\n' )
     // extract quantity from leading numbers
     const quantity = c.match(/[0-9]*/);
     const editCard  = c.replace(/ *\([^)]*\) */g, "");
