@@ -19,6 +19,7 @@ type Deck {
   id: ID! @unique
   author: User!
   deckList: String!
+  deckDetails: String!
   score: Int! @default(value: "0" )
 }
 

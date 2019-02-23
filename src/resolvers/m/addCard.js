@@ -1,21 +1,62 @@
 const bcrypt = require("bcryptjs");
 const mtg = require("mtgsdk");
 const { clearLog } = require("../../utils");
-const { testString } = require("./boiler/testString")
+const { testDeck } = require("./boiler/testString");
 
 async function addCard(parent, args, ctx) {
 
+  let deck = [];
   let deckMap = {};
 
-  console.log(testString)
-  testString.split("\n").forEach(card => {
-    // remove leading numbers from string
-    console.log('typeof card = ', typeof card, '\n' )
+  const cardsArray = testDeck.split("\n")
+  cardsArray.forEach(async (c, i) => {
+    console.log(`c ${i}`, '\n' )
+    // extract quantity from leading numbers
+    const quantity = c.match(/[0-9]*/);
+    const editCard  = c.replace(/ *\([^)]*\) */g, "");
+    const cardName = editCard.replace(/[0-9]/g, "").trim()
 
-    console.log(card.replace(/^[^.]+\./, ""))
+    let fetchedCard;
+    try {
+      fetchedCard = await mtg.card.where({
+        name: `${cardName}`,
+        pageSize: 1
+      });
+    } catch (e) {
+      console.log("e = ", e, "\n");
+    }
+
+    const {
+      name,
+      manaCost,
+      colors,
+      type,
+      rarity,
+      text,
+    } = fetchedCard[0]
+
+    const card = {
+      name,
+      manaCost,
+      colors,
+      type,
+      rarity,
+      text,
+      quantity
+    };
+
+    console.log(`card name ${i} = `, card.name, '\n' )
+
+    deck.push(card)
+
+    if(deck.length === cardsArray.length){
+      console.log('equal = ', '\n' )
+      return false
+    }
 
   })
 
+  console.log('deck = ', deck, '\n' )
 
 
   return true;
@@ -24,30 +65,3 @@ async function addCard(parent, args, ctx) {
 module.exports = {
   addCard
 };
-
-// const set = await mtg.set.find("AER");
-// console.log("set = ", set, "\n");
-
-// const card = await mtg.card.where({ name: "Gaea\'s Blessing", pageSize: 1 });
-//
-// console.log("card = ", card, "\n");
-
-// const aetherRevolt = await mtg.set.find("AER")
-//
-// clearLog('AER.booster', aetherRevolt.set.booster)
-//
-// Object.keys(aetherRevolt.set.booster).forEach((key) => {
-//   console.log('key = ', key, '\n' )
-// })
-
-// const blackLotus = await mtg.card.where({ name: 'Lotus', pageSize: 1})
-//
-// const lotusObj = blackLotus[0];
-
-// Object.keys(blackLotus[0]).forEach(key => {
-//   console.log('blackLotus[0][key] = ', blackLotus[0][key], '\n' )
-// })
-
-// Object.keys(lotusObj).forEach( key => {
-//   console.log(`lotusObj[${key}] = `, lotusObj[key], '\n' )
-// })
