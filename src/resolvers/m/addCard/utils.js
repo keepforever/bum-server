@@ -1,6 +1,8 @@
+const mtg = require("mtgsdk");
+
 function isSplitCard(card) {
   let regex = /\/\//;
-  console.log(`regex.test(${card}) =` , regex.test(card), '\n' )
+  // console.log(`regex.test(${card}) =` , regex.test(card), '\n' )
   return regex.test(card);
 }
 
@@ -12,16 +14,16 @@ function nameAndQuant(c) {
 }
 
 function nameAndQuantSplit(c) {
-  const [quantity] = c.match(/[0-9]*/);
 
+  const cardStringArray = c.split(" ");
+  const number = cardStringArray[cardStringArray.length - 1];
+  // console.log('number = ', number, '\n'
+  const [quantity] = c.match(/[0-9]*/);
   const regex = /[a-z]* \/\/ [a-z]*/i;
   const [splitCardName] = c.match(regex);
   const [_, setCode] = c.match(/\(([^)]+)\)/);
-
-  console.log("setText = ", setCode, "\n");
-
-  console.log("splitCardName = ", splitCardName, "\n");
-
+  // console.log("setCode = ", setCode, "\n");
+  // console.log("splitCardName = ", splitCardName, "\n");
   let cards = splitCardName.split(" ").filter(el => {
     return el !== "//";
   });
@@ -32,6 +34,8 @@ function nameAndQuantSplit(c) {
     cardNames: cards,
     quantity,
     cardKey,
+    number,
+    setCode,
   };
 }
 
@@ -67,10 +71,43 @@ function isBasicLand(c) {
   }
 }
 
+async function fetchSplitCard(card){
+
+  const { cardNames, quantity, cardKey, number, setCode } = nameAndQuantSplit(card)
+  let splitArray;
+  try {
+    splitArray = await mtg.card.where({
+      set: setCode,
+      number,
+      pageSize: 2
+    });
+    // console.log('splitArray = ', splitArray, '\n' )
+  } catch (e) {
+    console.log('e = ', e, '\n' )
+  }
+
+  if(splitArray.length === 0) {
+    return false
+  }
+
+  const splitCard = {
+    quantity,
+    isSplitCard: true,
+  }
+
+  for ( let i=0; i < 2; i++) {
+    const builtCard = buildCardObj(splitArray[i], quantity);
+    splitCard[splitArray[i].name] = builtCard;
+  }
+
+  return splitCard
+}
+
 module.exports = {
   buildCardObj,
   nameAndQuant,
   isBasicLand,
   isSplitCard,
-  nameAndQuantSplit
+  nameAndQuantSplit,
+  fetchSplitCard
 };
