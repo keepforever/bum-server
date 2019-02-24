@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const mtg = require("mtgsdk");
 const { clearLog, isBasicLand } = require("../../utils");
-const { testDeck } = require("./boiler/testString");
+const { testDeck, fullTestDeck } = require("./boiler/testString");
 
 const nameAndQuant = (c) => {
   const [quantity] = c.match(/[0-9]*/);
@@ -10,12 +10,31 @@ const nameAndQuant = (c) => {
   return [quantity, cardName]
 }
 
+const buildCardObj = (c, quantity) => {
+
+  const { name, manaCost, colors, type, rarity, text, imageUrl } = c;
+
+  return {
+    name,
+    manaCost,
+    colors,
+    type,
+    rarity,
+    text,
+    imageUrl,
+    quantity,
+  };
+
+}
+
 async function addCard(parent, args, ctx) {
   let deck = [];
   let deckMap = {};
   let count = 0
 
-  let cardsArray = testDeck.split("\n");
+  // let cardsArray = testDeck.split("\n");
+  let cardsArray = fullTestDeck.split("\n");
+
 
   for (const card of cardsArray) {
     // extract quantity from leading numbers
@@ -26,7 +45,6 @@ async function addCard(parent, args, ctx) {
         name: cardName,
         quantity,
         type: "basic land",
-        manaCost: null,
       };
       deckMap[card.name] = card
       count++
@@ -39,32 +57,22 @@ async function addCard(parent, args, ctx) {
         });
       } catch (e) {
         console.log("e = ", e, "\n");
+        const card = {
+          name: cardName,
+          quantity,
+        };
+        deckMap[card.name] = card
+        count++
       }
 
-      const { name, manaCost, colors, type, rarity, text, imageUrl } = fetchedCard[0];
+      const builtCard = buildCardObj(fetchedCard[0], quantity)
 
-      const card = {
-        name,
-        manaCost,
-        colors,
-        type,
-        rarity,
-        text,
-        quantity,
-        imageUrl,
-      };
-
-      deckMap[card.name] = card
+      deckMap[builtCard.name] = builtCard
       count++
       console.log('count = ', count, '\n' )
 
     }
-
   }
-
-  // console.log('deckMap length = ', Object.keys(deckMap), '\n' )
-
-  // console.log('cardsArray.length = ', cardsArray, '\n' )
 
   if (Object.keys(deckMap).length === cardsArray.length) {
     // console.log("done", "\n");
@@ -74,7 +82,7 @@ async function addCard(parent, args, ctx) {
     return "something went wrong"
   }
 
-  return true;
+  return "error";
 }
 
 module.exports = {
