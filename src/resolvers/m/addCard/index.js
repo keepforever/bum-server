@@ -35,7 +35,6 @@ async function addCard(parent, args, ctx){
     } else if (isSplitCard(card)) {
       // console.log("hello isSplitCard else-if", card);
       const { cardNames, quantity, cardKey } = nameAndQuantSplit(card)
-
       const fetchedSplitCard =  await fetchSplitCard(card);
 
       if(!fetchedSplitCard) {
@@ -44,15 +43,19 @@ async function addCard(parent, args, ctx){
           quantity,
           type: "split"
         };
+
         deckMap[cardKey] = fallbackSplitCard;
         count++
         console.log('count = ', count, '\n' )
+
       } else {
+
         deckMap[cardKey] = fetchedSplitCard
         count++
         console.log('count = ', count, '\n' )
       }
     } else {
+      
       let fetchedCard;
       try {
         const [quantity, cardName] = nameAndQuant(card);
