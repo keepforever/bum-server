@@ -6,9 +6,13 @@ const fullTestDeck = `4 Stomping Ground (RNA) 259\n4 Rootbound Crag (XLN) 256\n1
 
 const testDeck = `4 Stomping Ground (RNA) 259\n4 Rootbound Crag (XLN) 256\n14 Forest (RNA) 264\n4 Llanowar Elves (M19) 314`
 
+
+const testSplitDeck = `1 Find // Finality (GRN) 225\n4 Rootbound Crag (XLN) 256\n14 Forest (RNA) 264`
+
 module.exports = {
   testCards,
   testCard,
   testDeck,
-  fullTestDeck
+  fullTestDeck,
+  testSplitDeck
 }

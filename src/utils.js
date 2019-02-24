@@ -45,23 +45,11 @@ class AuthError extends Error {
   }
 }
 
-function isBasicLand(str) {
-  if(
-    str.toLowerCase() === "swamp" ||
-    str.toLowerCase() === "forest" ||
-    str.toLowerCase() === "island" ||
-    str.toLowerCase() === "plains" ||
-    str.toLowerCase() === "mountain") {
-      return true
-    } else {
-      return false
-    }
-}
+
 
 module.exports = {
   getUserId,
   AuthError,
   clearLog,
-  createToken,
-  isBasicLand
+  createToken
 }
