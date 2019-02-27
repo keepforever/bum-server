@@ -20,6 +20,7 @@ type Deck {
   author: User!
   deckList: String!
   deckDetails: String!
+  deckName: String! @default(value: "default deck name")
   score: Int! @default(value: "0" )
 }
 

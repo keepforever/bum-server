@@ -15,7 +15,7 @@ const {
   fetchSplitCard
 } = require("./utils");
 
-async function addDeck(parent, { deckList, deckDetails }, ctx) {
+async function addDeck(parent, { deckList, deckDetails, deckName }, ctx) {
   const id = getUserId(ctx);
 
   if (!id) {
@@ -89,13 +89,15 @@ async function addDeck(parent, { deckList, deckDetails }, ctx) {
     // this mutation takes the form which the Prisma API would find
     // acceptable
     const mutation = `
-      mutation($deckList: String!, $deckDetails: String!, $id: ID!) {
+      mutation($deckName: String!, $deckList: String!, $deckDetails: String!, $id: ID!) {
         createDeck(data: {
+          deckName: $deckName,
           deckList: $deckList,
           deckDetails: $deckDetails,
           author: { connect: { id: $id } }
         }) {
           id
+          deckName
           deckList
           deckDetails
           score
@@ -106,12 +108,13 @@ async function addDeck(parent, { deckList, deckDetails }, ctx) {
     const variables = {
       deckList: JSON.stringify(deckMap),
       deckDetails,
+      deckName,
       id
     };
 
-    const newDeck = await ctx.prisma.$graphql(mutation, variables);
-
-    return JSON.stringify(newDeck);
+    const {createDeck} = await ctx.prisma.$graphql(mutation, variables);
+    // console.log('\n', 'newDeck', '\n', '\n', createDeck )
+    return JSON.stringify(createDeck);
   } else {
     return "something went wrong";
   }

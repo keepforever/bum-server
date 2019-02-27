@@ -311,6 +311,7 @@ type Deck {
   author: User!
   deckList: String!
   deckDetails: String!
+  deckName: String!
   score: Int!
 }
 
@@ -324,6 +325,7 @@ input DeckCreateInput {
   author: UserCreateOneWithoutDecksInput!
   deckList: String!
   deckDetails: String!
+  deckName: String
   score: Int
 }
 
@@ -340,6 +342,7 @@ input DeckCreateOneInput {
 input DeckCreateWithoutAuthorInput {
   deckList: String!
   deckDetails: String!
+  deckName: String
   score: Int
 }
 
@@ -355,6 +358,8 @@ enum DeckOrderByInput {
   deckList_DESC
   deckDetails_ASC
   deckDetails_DESC
+  deckName_ASC
+  deckName_DESC
   score_ASC
   score_DESC
   createdAt_ASC
@@ -367,6 +372,7 @@ type DeckPreviousValues {
   id: ID!
   deckList: String!
   deckDetails: String!
+  deckName: String!
   score: Int!
 }
 
@@ -413,6 +419,20 @@ input DeckScalarWhereInput {
   deckDetails_not_starts_with: String
   deckDetails_ends_with: String
   deckDetails_not_ends_with: String
+  deckName: String
+  deckName_not: String
+  deckName_in: [String!]
+  deckName_not_in: [String!]
+  deckName_lt: String
+  deckName_lte: String
+  deckName_gt: String
+  deckName_gte: String
+  deckName_contains: String
+  deckName_not_contains: String
+  deckName_starts_with: String
+  deckName_not_starts_with: String
+  deckName_ends_with: String
+  deckName_not_ends_with: String
   score: Int
   score_not: Int
   score_in: [Int!]
@@ -448,6 +468,7 @@ input DeckUpdateDataInput {
   author: UserUpdateOneRequiredWithoutDecksInput
   deckList: String
   deckDetails: String
+  deckName: String
   score: Int
 }
 
@@ -455,18 +476,21 @@ input DeckUpdateInput {
   author: UserUpdateOneRequiredWithoutDecksInput
   deckList: String
   deckDetails: String
+  deckName: String
   score: Int
 }
 
 input DeckUpdateManyDataInput {
   deckList: String
   deckDetails: String
+  deckName: String
   score: Int
 }
 
 input DeckUpdateManyMutationInput {
   deckList: String
   deckDetails: String
+  deckName: String
   score: Int
 }
 
@@ -497,6 +521,7 @@ input DeckUpdateOneRequiredInput {
 input DeckUpdateWithoutAuthorDataInput {
   deckList: String
   deckDetails: String
+  deckName: String
   score: Int
 }
 
@@ -560,6 +585,20 @@ input DeckWhereInput {
   deckDetails_not_starts_with: String
   deckDetails_ends_with: String
   deckDetails_not_ends_with: String
+  deckName: String
+  deckName_not: String
+  deckName_in: [String!]
+  deckName_not_in: [String!]
+  deckName_lt: String
+  deckName_lte: String
+  deckName_gt: String
+  deckName_gte: String
+  deckName_contains: String
+  deckName_not_contains: String
+  deckName_starts_with: String
+  deckName_not_starts_with: String
+  deckName_ends_with: String
+  deckName_not_ends_with: String
   score: Int
   score_not: Int
   score_in: [Int!]

@@ -8,6 +8,7 @@ type Mutation {
   addDeck(
     deckList: String!
     deckDetails: String!
+    deckName: String!
   ): String!
   addCard: String!
   sendMessage(recipient: ID!, type: String!, text: String!): Boolean!
