@@ -22,38 +22,6 @@ async function addDeck(parent, { deckList, deckDetails }, ctx) {
     return "no user found";
   }
 
-  // this mutation takes the form which the Prisma API would find
-  // acceptable 
-  const mutation = `
-    mutation($deckList: String!, $deckDetails: String!, $id: ID!) {
-      createDeck(data: {
-        deckList: $deckList,
-        deckDetails: $deckDetails,
-        author: { connect: { id: $id } }
-      }) {
-        id
-        deckList
-        deckDetails
-        score
-      }
-    }
-  `;
-
-  const variables = {
-    deckList,
-    deckDetails,
-    id
-  };
-
-  const newDeck = await ctx.prisma.$graphql(mutation, variables);
-
-  console.log('newDeck = ', newDeck, '\n' )
-
-
-  const user = await ctx.prisma.user({ id });
-
-  console.log("\n", "user", "\n", "\n", user);
-
   let deckMap = {};
   let count = 0;
 
@@ -117,21 +85,31 @@ async function addDeck(parent, { deckList, deckDetails }, ctx) {
   }
 
   if (Object.keys(deckMap).length === cardsArray.length) {
-    // console.log("done", "\n");
-    // console.log('count = ', count, '\n' )
-    // console.log("deckMap = ", deckMap, "\n");
-    // const newDeck = await ctx.prisma.createDeck({
-    //   data: {
-    //     author: {
-    //       connect: {
-    //         email: user.email
-    //       }
-    //     },
-    //     deckDetails,
-    //     deckList
-    //   }
-    // });
 
+    // this mutation takes the form which the Prisma API would find
+    // acceptable
+    const mutation = `
+      mutation($deckList: String!, $deckDetails: String!, $id: ID!) {
+        createDeck(data: {
+          deckList: $deckList,
+          deckDetails: $deckDetails,
+          author: { connect: { id: $id } }
+        }) {
+          id
+          deckList
+          deckDetails
+          score
+        }
+      }
+    `;
+
+    const variables = {
+      deckList: JSON.stringify(deckMap),
+      deckDetails,
+      id
+    };
+
+    const newDeck = await ctx.prisma.$graphql(mutation, variables);
 
     return JSON.stringify(newDeck);
   } else {
