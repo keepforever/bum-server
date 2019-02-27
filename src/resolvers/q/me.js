@@ -16,10 +16,16 @@ async function me(parent, args, ctx) {
   console.log('mySettings = ', mySettings, '\n' )
 
   const myInbox = await ctx.prisma.user({ id }).inbox();
+  const myDecks = await ctx.prisma.user({ id }).decks();
+
   console.log('myInbox = ', myInbox, '\n' )
-  
+
   if(myInbox) {
     meUser.inbox = myInbox;
+  }
+
+  if(myDecks) {
+    meUser.decks = myDecks;
   }
 
   if(mySettings) {

@@ -1,10 +1,14 @@
-# import User, Deck, Vote, UserInfo, UserSettings, Message, Connection from "../generated/prisma.graphql"
+# import User, Deck, Vote, DeckCreateInput, UserInfo, UserSettings, Message, Connection from "../generated/prisma.graphql"
 
 type Query {
   me: User
 }
 
 type Mutation {
+  addDeck(
+    deckList: String!
+    deckDetails: String!
+  ): String!
   addCard: String!
   sendMessage(recipient: ID!, type: String!, text: String!): Boolean!
   refreshToken: RefreshTokenPayload!

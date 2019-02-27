@@ -4,11 +4,15 @@ const { refreshToken } = require("./refreshToken");
 const { userSettings } = require("./userSettings");
 const { sendMessage } = require("./sendMessage");
 const { addCard } = require("./addCard");
+const { addDeck } = require('./addDeck');
 
 
 const m = {
   async addCard(parent, args, ctx) {
     return await addCard(parent, args, ctx);
+  },
+  async addDeck(parent, args, ctx) {
+    return await addDeck(parent, args, ctx);
   },
   async userSignup(parent, args, ctx) {
     return await userSignup(parent, args, ctx);

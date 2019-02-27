@@ -342,6 +342,8 @@ export type DeckOrderByInput =
   | "id_DESC"
   | "deckList_ASC"
   | "deckList_DESC"
+  | "deckDetails_ASC"
+  | "deckDetails_DESC"
   | "score_ASC"
   | "score_DESC"
   | "createdAt_ASC"
@@ -463,6 +465,20 @@ export interface DeckWhereInput {
   deckList_not_starts_with?: String;
   deckList_ends_with?: String;
   deckList_not_ends_with?: String;
+  deckDetails?: String;
+  deckDetails_not?: String;
+  deckDetails_in?: String[] | String;
+  deckDetails_not_in?: String[] | String;
+  deckDetails_lt?: String;
+  deckDetails_lte?: String;
+  deckDetails_gt?: String;
+  deckDetails_gte?: String;
+  deckDetails_contains?: String;
+  deckDetails_not_contains?: String;
+  deckDetails_starts_with?: String;
+  deckDetails_not_starts_with?: String;
+  deckDetails_ends_with?: String;
+  deckDetails_not_ends_with?: String;
   score?: Int;
   score_not?: Int;
   score_in?: Int[] | Int;
@@ -867,6 +883,7 @@ export interface DeckCreateManyWithoutAuthorInput {
 
 export interface DeckCreateWithoutAuthorInput {
   deckList: String;
+  deckDetails: String;
   score?: Int;
 }
 
@@ -888,6 +905,7 @@ export interface DeckCreateOneInput {
 export interface DeckCreateInput {
   author: UserCreateOneWithoutDecksInput;
   deckList: String;
+  deckDetails: String;
   score?: Int;
 }
 
@@ -1065,6 +1083,7 @@ export interface DeckUpdateWithWhereUniqueWithoutAuthorInput {
 
 export interface DeckUpdateWithoutAuthorDataInput {
   deckList?: String;
+  deckDetails?: String;
   score?: Int;
 }
 
@@ -1103,6 +1122,20 @@ export interface DeckScalarWhereInput {
   deckList_not_starts_with?: String;
   deckList_ends_with?: String;
   deckList_not_ends_with?: String;
+  deckDetails?: String;
+  deckDetails_not?: String;
+  deckDetails_in?: String[] | String;
+  deckDetails_not_in?: String[] | String;
+  deckDetails_lt?: String;
+  deckDetails_lte?: String;
+  deckDetails_gt?: String;
+  deckDetails_gte?: String;
+  deckDetails_contains?: String;
+  deckDetails_not_contains?: String;
+  deckDetails_starts_with?: String;
+  deckDetails_not_starts_with?: String;
+  deckDetails_ends_with?: String;
+  deckDetails_not_ends_with?: String;
   score?: Int;
   score_not?: Int;
   score_in?: Int[] | Int;
@@ -1123,6 +1156,7 @@ export interface DeckUpdateManyWithWhereNestedInput {
 
 export interface DeckUpdateManyDataInput {
   deckList?: String;
+  deckDetails?: String;
   score?: Int;
 }
 
@@ -1164,6 +1198,7 @@ export interface DeckUpdateOneRequiredInput {
 export interface DeckUpdateDataInput {
   author?: UserUpdateOneRequiredWithoutDecksInput;
   deckList?: String;
+  deckDetails?: String;
   score?: Int;
 }
 
@@ -1576,11 +1611,13 @@ export interface ConnectionUpdateManyMutationInput {
 export interface DeckUpdateInput {
   author?: UserUpdateOneRequiredWithoutDecksInput;
   deckList?: String;
+  deckDetails?: String;
   score?: Int;
 }
 
 export interface DeckUpdateManyMutationInput {
   deckList?: String;
+  deckDetails?: String;
   score?: Int;
 }
 
@@ -2039,6 +2076,7 @@ export interface UserInfoSubscription
 export interface Deck {
   id: ID_Output;
   deckList: String;
+  deckDetails: String;
   score: Int;
 }
 
@@ -2046,6 +2084,7 @@ export interface DeckPromise extends Promise<Deck>, Fragmentable {
   id: () => Promise<ID_Output>;
   author: <T = UserPromise>() => T;
   deckList: () => Promise<String>;
+  deckDetails: () => Promise<String>;
   score: () => Promise<Int>;
 }
 
@@ -2055,6 +2094,7 @@ export interface DeckSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   author: <T = UserSubscription>() => T;
   deckList: () => Promise<AsyncIterator<String>>;
+  deckDetails: () => Promise<AsyncIterator<String>>;
   score: () => Promise<AsyncIterator<Int>>;
 }
 
@@ -2641,6 +2681,7 @@ export interface DeckSubscriptionPayloadSubscription
 export interface DeckPreviousValues {
   id: ID_Output;
   deckList: String;
+  deckDetails: String;
   score: Int;
 }
 
@@ -2649,6 +2690,7 @@ export interface DeckPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   deckList: () => Promise<String>;
+  deckDetails: () => Promise<String>;
   score: () => Promise<Int>;
 }
 
@@ -2657,6 +2699,7 @@ export interface DeckPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   deckList: () => Promise<AsyncIterator<String>>;
+  deckDetails: () => Promise<AsyncIterator<String>>;
   score: () => Promise<AsyncIterator<Int>>;
 }
 
