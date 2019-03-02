@@ -670,6 +670,7 @@ export interface VoteWhereInput {
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
   deck?: DeckWhereInput;
+  author?: UserWhereInput;
   quality?: Boolean;
   quality_not?: Boolean;
   AND?: VoteWhereInput[] | VoteWhereInput;
@@ -876,7 +877,7 @@ export interface UserCreateWithoutConnectionsInput {
   isAdmin?: Boolean;
   userInfo?: UserInfoCreateOneWithoutUserInput;
   decks?: DeckCreateManyWithoutAuthorInput;
-  votes?: VoteCreateManyInput;
+  votes?: VoteCreateManyWithoutAuthorInput;
   userSettings?: UserSettingsCreateOneWithoutUserInput;
   inbox?: MessageCreateManyWithoutRecipientInput;
   outbox?: MessageCreateManyWithoutAuthorInput;
@@ -904,12 +905,12 @@ export interface DeckCreateWithoutAuthorInput {
   score?: Int;
 }
 
-export interface VoteCreateManyInput {
-  create?: VoteCreateInput[] | VoteCreateInput;
+export interface VoteCreateManyWithoutAuthorInput {
+  create?: VoteCreateWithoutAuthorInput[] | VoteCreateWithoutAuthorInput;
   connect?: VoteWhereUniqueInput[] | VoteWhereUniqueInput;
 }
 
-export interface VoteCreateInput {
+export interface VoteCreateWithoutAuthorInput {
   deck: DeckCreateOneInput;
   quality: Boolean;
 }
@@ -938,7 +939,7 @@ export interface UserCreateWithoutDecksInput {
   password: String;
   isAdmin?: Boolean;
   userInfo?: UserInfoCreateOneWithoutUserInput;
-  votes?: VoteCreateManyInput;
+  votes?: VoteCreateManyWithoutAuthorInput;
   userSettings?: UserSettingsCreateOneWithoutUserInput;
   connections?: ConnectionCreateManyWithoutFriendInput;
   inbox?: MessageCreateManyWithoutRecipientInput;
@@ -994,7 +995,7 @@ export interface UserCreateWithoutOutboxInput {
   isAdmin?: Boolean;
   userInfo?: UserInfoCreateOneWithoutUserInput;
   decks?: DeckCreateManyWithoutAuthorInput;
-  votes?: VoteCreateManyInput;
+  votes?: VoteCreateManyWithoutAuthorInput;
   userSettings?: UserSettingsCreateOneWithoutUserInput;
   connections?: ConnectionCreateManyWithoutFriendInput;
   inbox?: MessageCreateManyWithoutRecipientInput;
@@ -1023,7 +1024,7 @@ export interface UserCreateWithoutInboxInput {
   isAdmin?: Boolean;
   userInfo?: UserInfoCreateOneWithoutUserInput;
   decks?: DeckCreateManyWithoutAuthorInput;
-  votes?: VoteCreateManyInput;
+  votes?: VoteCreateManyWithoutAuthorInput;
   userSettings?: UserSettingsCreateOneWithoutUserInput;
   connections?: ConnectionCreateManyWithoutFriendInput;
   outbox?: MessageCreateManyWithoutAuthorInput;
@@ -1051,7 +1052,7 @@ export interface UserUpdateWithoutConnectionsDataInput {
   isAdmin?: Boolean;
   userInfo?: UserInfoUpdateOneWithoutUserInput;
   decks?: DeckUpdateManyWithoutAuthorInput;
-  votes?: VoteUpdateManyInput;
+  votes?: VoteUpdateManyWithoutAuthorInput;
   userSettings?: UserSettingsUpdateOneWithoutUserInput;
   inbox?: MessageUpdateManyWithoutRecipientInput;
   outbox?: MessageUpdateManyWithoutAuthorInput;
@@ -1194,30 +1195,30 @@ export interface DeckUpdateManyDataInput {
   score?: Int;
 }
 
-export interface VoteUpdateManyInput {
-  create?: VoteCreateInput[] | VoteCreateInput;
-  update?:
-    | VoteUpdateWithWhereUniqueNestedInput[]
-    | VoteUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | VoteUpsertWithWhereUniqueNestedInput[]
-    | VoteUpsertWithWhereUniqueNestedInput;
+export interface VoteUpdateManyWithoutAuthorInput {
+  create?: VoteCreateWithoutAuthorInput[] | VoteCreateWithoutAuthorInput;
   delete?: VoteWhereUniqueInput[] | VoteWhereUniqueInput;
   connect?: VoteWhereUniqueInput[] | VoteWhereUniqueInput;
   set?: VoteWhereUniqueInput[] | VoteWhereUniqueInput;
   disconnect?: VoteWhereUniqueInput[] | VoteWhereUniqueInput;
+  update?:
+    | VoteUpdateWithWhereUniqueWithoutAuthorInput[]
+    | VoteUpdateWithWhereUniqueWithoutAuthorInput;
+  upsert?:
+    | VoteUpsertWithWhereUniqueWithoutAuthorInput[]
+    | VoteUpsertWithWhereUniqueWithoutAuthorInput;
   deleteMany?: VoteScalarWhereInput[] | VoteScalarWhereInput;
   updateMany?:
     | VoteUpdateManyWithWhereNestedInput[]
     | VoteUpdateManyWithWhereNestedInput;
 }
 
-export interface VoteUpdateWithWhereUniqueNestedInput {
+export interface VoteUpdateWithWhereUniqueWithoutAuthorInput {
   where: VoteWhereUniqueInput;
-  data: VoteUpdateDataInput;
+  data: VoteUpdateWithoutAuthorDataInput;
 }
 
-export interface VoteUpdateDataInput {
+export interface VoteUpdateWithoutAuthorDataInput {
   deck?: DeckUpdateOneRequiredInput;
   quality?: Boolean;
 }
@@ -1250,7 +1251,7 @@ export interface UserUpdateWithoutDecksDataInput {
   password?: String;
   isAdmin?: Boolean;
   userInfo?: UserInfoUpdateOneWithoutUserInput;
-  votes?: VoteUpdateManyInput;
+  votes?: VoteUpdateManyWithoutAuthorInput;
   userSettings?: UserSettingsUpdateOneWithoutUserInput;
   connections?: ConnectionUpdateManyWithoutFriendInput;
   inbox?: MessageUpdateManyWithoutRecipientInput;
@@ -1433,7 +1434,7 @@ export interface UserUpdateWithoutOutboxDataInput {
   isAdmin?: Boolean;
   userInfo?: UserInfoUpdateOneWithoutUserInput;
   decks?: DeckUpdateManyWithoutAuthorInput;
-  votes?: VoteUpdateManyInput;
+  votes?: VoteUpdateManyWithoutAuthorInput;
   userSettings?: UserSettingsUpdateOneWithoutUserInput;
   connections?: ConnectionUpdateManyWithoutFriendInput;
   inbox?: MessageUpdateManyWithoutRecipientInput;
@@ -1567,7 +1568,7 @@ export interface UserUpdateWithoutInboxDataInput {
   isAdmin?: Boolean;
   userInfo?: UserInfoUpdateOneWithoutUserInput;
   decks?: DeckUpdateManyWithoutAuthorInput;
-  votes?: VoteUpdateManyInput;
+  votes?: VoteUpdateManyWithoutAuthorInput;
   userSettings?: UserSettingsUpdateOneWithoutUserInput;
   connections?: ConnectionUpdateManyWithoutFriendInput;
   outbox?: MessageUpdateManyWithoutAuthorInput;
@@ -1594,10 +1595,10 @@ export interface DeckUpsertNestedInput {
   create: DeckCreateInput;
 }
 
-export interface VoteUpsertWithWhereUniqueNestedInput {
+export interface VoteUpsertWithWhereUniqueWithoutAuthorInput {
   where: VoteWhereUniqueInput;
-  update: VoteUpdateDataInput;
-  create: VoteCreateInput;
+  update: VoteUpdateWithoutAuthorDataInput;
+  create: VoteCreateWithoutAuthorInput;
 }
 
 export interface VoteScalarWhereInput {
@@ -1684,7 +1685,7 @@ export interface UserCreateInput {
   isAdmin?: Boolean;
   userInfo?: UserInfoCreateOneWithoutUserInput;
   decks?: DeckCreateManyWithoutAuthorInput;
-  votes?: VoteCreateManyInput;
+  votes?: VoteCreateManyWithoutAuthorInput;
   userSettings?: UserSettingsCreateOneWithoutUserInput;
   connections?: ConnectionCreateManyWithoutFriendInput;
   inbox?: MessageCreateManyWithoutRecipientInput;
@@ -1698,7 +1699,7 @@ export interface UserUpdateInput {
   isAdmin?: Boolean;
   userInfo?: UserInfoUpdateOneWithoutUserInput;
   decks?: DeckUpdateManyWithoutAuthorInput;
-  votes?: VoteUpdateManyInput;
+  votes?: VoteUpdateManyWithoutAuthorInput;
   userSettings?: UserSettingsUpdateOneWithoutUserInput;
   connections?: ConnectionUpdateManyWithoutFriendInput;
   inbox?: MessageUpdateManyWithoutRecipientInput;
@@ -1729,7 +1730,7 @@ export interface UserCreateWithoutUserInfoInput {
   password: String;
   isAdmin?: Boolean;
   decks?: DeckCreateManyWithoutAuthorInput;
-  votes?: VoteCreateManyInput;
+  votes?: VoteCreateManyWithoutAuthorInput;
   userSettings?: UserSettingsCreateOneWithoutUserInput;
   connections?: ConnectionCreateManyWithoutFriendInput;
   inbox?: MessageCreateManyWithoutRecipientInput;
@@ -1755,7 +1756,7 @@ export interface UserUpdateWithoutUserInfoDataInput {
   password?: String;
   isAdmin?: Boolean;
   decks?: DeckUpdateManyWithoutAuthorInput;
-  votes?: VoteUpdateManyInput;
+  votes?: VoteUpdateManyWithoutAuthorInput;
   userSettings?: UserSettingsUpdateOneWithoutUserInput;
   connections?: ConnectionUpdateManyWithoutFriendInput;
   inbox?: MessageUpdateManyWithoutRecipientInput;
@@ -1790,7 +1791,7 @@ export interface UserCreateWithoutUserSettingsInput {
   isAdmin?: Boolean;
   userInfo?: UserInfoCreateOneWithoutUserInput;
   decks?: DeckCreateManyWithoutAuthorInput;
-  votes?: VoteCreateManyInput;
+  votes?: VoteCreateManyWithoutAuthorInput;
   connections?: ConnectionCreateManyWithoutFriendInput;
   inbox?: MessageCreateManyWithoutRecipientInput;
   outbox?: MessageCreateManyWithoutAuthorInput;
@@ -1816,7 +1817,7 @@ export interface UserUpdateWithoutUserSettingsDataInput {
   isAdmin?: Boolean;
   userInfo?: UserInfoUpdateOneWithoutUserInput;
   decks?: DeckUpdateManyWithoutAuthorInput;
-  votes?: VoteUpdateManyInput;
+  votes?: VoteUpdateManyWithoutAuthorInput;
   connections?: ConnectionUpdateManyWithoutFriendInput;
   inbox?: MessageUpdateManyWithoutRecipientInput;
   outbox?: MessageUpdateManyWithoutAuthorInput;
@@ -1832,9 +1833,59 @@ export interface UserSettingsUpdateManyMutationInput {
   autoAccept?: Boolean;
 }
 
+export interface VoteCreateInput {
+  deck: DeckCreateOneInput;
+  author: UserCreateOneWithoutVotesInput;
+  quality: Boolean;
+}
+
+export interface UserCreateOneWithoutVotesInput {
+  create?: UserCreateWithoutVotesInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutVotesInput {
+  name: String;
+  email: String;
+  password: String;
+  isAdmin?: Boolean;
+  userInfo?: UserInfoCreateOneWithoutUserInput;
+  decks?: DeckCreateManyWithoutAuthorInput;
+  userSettings?: UserSettingsCreateOneWithoutUserInput;
+  connections?: ConnectionCreateManyWithoutFriendInput;
+  inbox?: MessageCreateManyWithoutRecipientInput;
+  outbox?: MessageCreateManyWithoutAuthorInput;
+}
+
 export interface VoteUpdateInput {
   deck?: DeckUpdateOneRequiredInput;
+  author?: UserUpdateOneRequiredWithoutVotesInput;
   quality?: Boolean;
+}
+
+export interface UserUpdateOneRequiredWithoutVotesInput {
+  create?: UserCreateWithoutVotesInput;
+  update?: UserUpdateWithoutVotesDataInput;
+  upsert?: UserUpsertWithoutVotesInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateWithoutVotesDataInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  isAdmin?: Boolean;
+  userInfo?: UserInfoUpdateOneWithoutUserInput;
+  decks?: DeckUpdateManyWithoutAuthorInput;
+  userSettings?: UserSettingsUpdateOneWithoutUserInput;
+  connections?: ConnectionUpdateManyWithoutFriendInput;
+  inbox?: MessageUpdateManyWithoutRecipientInput;
+  outbox?: MessageUpdateManyWithoutAuthorInput;
+}
+
+export interface UserUpsertWithoutVotesInput {
+  update: UserUpdateWithoutVotesDataInput;
+  create: UserCreateWithoutVotesInput;
 }
 
 export interface VoteUpdateManyMutationInput {
@@ -2146,6 +2197,7 @@ export interface Vote {
 export interface VotePromise extends Promise<Vote>, Fragmentable {
   id: () => Promise<ID_Output>;
   deck: <T = DeckPromise>() => T;
+  author: <T = UserPromise>() => T;
   quality: () => Promise<Boolean>;
 }
 
@@ -2154,6 +2206,7 @@ export interface VoteSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   deck: <T = DeckSubscription>() => T;
+  author: <T = UserSubscription>() => T;
   quality: () => Promise<AsyncIterator<Boolean>>;
 }
 

@@ -27,6 +27,7 @@ type Deck {
 type Vote {
   id: ID! @unique
   deck: Deck!
+  author: User!
   quality: Boolean!
 }
 

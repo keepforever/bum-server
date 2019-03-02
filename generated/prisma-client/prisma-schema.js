@@ -1048,7 +1048,7 @@ input UserCreateInput {
   isAdmin: Boolean
   userInfo: UserInfoCreateOneWithoutUserInput
   decks: DeckCreateManyWithoutAuthorInput
-  votes: VoteCreateManyInput
+  votes: VoteCreateManyWithoutAuthorInput
   userSettings: UserSettingsCreateOneWithoutUserInput
   connections: ConnectionCreateManyWithoutFriendInput
   inbox: MessageCreateManyWithoutRecipientInput
@@ -1085,6 +1085,11 @@ input UserCreateOneWithoutUserSettingsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutVotesInput {
+  create: UserCreateWithoutVotesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateWithoutConnectionsInput {
   name: String!
   email: String!
@@ -1092,7 +1097,7 @@ input UserCreateWithoutConnectionsInput {
   isAdmin: Boolean
   userInfo: UserInfoCreateOneWithoutUserInput
   decks: DeckCreateManyWithoutAuthorInput
-  votes: VoteCreateManyInput
+  votes: VoteCreateManyWithoutAuthorInput
   userSettings: UserSettingsCreateOneWithoutUserInput
   inbox: MessageCreateManyWithoutRecipientInput
   outbox: MessageCreateManyWithoutAuthorInput
@@ -1104,7 +1109,7 @@ input UserCreateWithoutDecksInput {
   password: String!
   isAdmin: Boolean
   userInfo: UserInfoCreateOneWithoutUserInput
-  votes: VoteCreateManyInput
+  votes: VoteCreateManyWithoutAuthorInput
   userSettings: UserSettingsCreateOneWithoutUserInput
   connections: ConnectionCreateManyWithoutFriendInput
   inbox: MessageCreateManyWithoutRecipientInput
@@ -1118,7 +1123,7 @@ input UserCreateWithoutInboxInput {
   isAdmin: Boolean
   userInfo: UserInfoCreateOneWithoutUserInput
   decks: DeckCreateManyWithoutAuthorInput
-  votes: VoteCreateManyInput
+  votes: VoteCreateManyWithoutAuthorInput
   userSettings: UserSettingsCreateOneWithoutUserInput
   connections: ConnectionCreateManyWithoutFriendInput
   outbox: MessageCreateManyWithoutAuthorInput
@@ -1131,7 +1136,7 @@ input UserCreateWithoutOutboxInput {
   isAdmin: Boolean
   userInfo: UserInfoCreateOneWithoutUserInput
   decks: DeckCreateManyWithoutAuthorInput
-  votes: VoteCreateManyInput
+  votes: VoteCreateManyWithoutAuthorInput
   userSettings: UserSettingsCreateOneWithoutUserInput
   connections: ConnectionCreateManyWithoutFriendInput
   inbox: MessageCreateManyWithoutRecipientInput
@@ -1143,7 +1148,7 @@ input UserCreateWithoutUserInfoInput {
   password: String!
   isAdmin: Boolean
   decks: DeckCreateManyWithoutAuthorInput
-  votes: VoteCreateManyInput
+  votes: VoteCreateManyWithoutAuthorInput
   userSettings: UserSettingsCreateOneWithoutUserInput
   connections: ConnectionCreateManyWithoutFriendInput
   inbox: MessageCreateManyWithoutRecipientInput
@@ -1157,7 +1162,20 @@ input UserCreateWithoutUserSettingsInput {
   isAdmin: Boolean
   userInfo: UserInfoCreateOneWithoutUserInput
   decks: DeckCreateManyWithoutAuthorInput
-  votes: VoteCreateManyInput
+  votes: VoteCreateManyWithoutAuthorInput
+  connections: ConnectionCreateManyWithoutFriendInput
+  inbox: MessageCreateManyWithoutRecipientInput
+  outbox: MessageCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutVotesInput {
+  name: String!
+  email: String!
+  password: String!
+  isAdmin: Boolean
+  userInfo: UserInfoCreateOneWithoutUserInput
+  decks: DeckCreateManyWithoutAuthorInput
+  userSettings: UserSettingsCreateOneWithoutUserInput
   connections: ConnectionCreateManyWithoutFriendInput
   inbox: MessageCreateManyWithoutRecipientInput
   outbox: MessageCreateManyWithoutAuthorInput
@@ -1504,7 +1522,7 @@ input UserUpdateInput {
   isAdmin: Boolean
   userInfo: UserInfoUpdateOneWithoutUserInput
   decks: DeckUpdateManyWithoutAuthorInput
-  votes: VoteUpdateManyInput
+  votes: VoteUpdateManyWithoutAuthorInput
   userSettings: UserSettingsUpdateOneWithoutUserInput
   connections: ConnectionUpdateManyWithoutFriendInput
   inbox: MessageUpdateManyWithoutRecipientInput
@@ -1560,6 +1578,13 @@ input UserUpdateOneRequiredWithoutUserSettingsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutVotesInput {
+  create: UserCreateWithoutVotesInput
+  update: UserUpdateWithoutVotesDataInput
+  upsert: UserUpsertWithoutVotesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithoutConnectionsDataInput {
   name: String
   email: String
@@ -1567,7 +1592,7 @@ input UserUpdateWithoutConnectionsDataInput {
   isAdmin: Boolean
   userInfo: UserInfoUpdateOneWithoutUserInput
   decks: DeckUpdateManyWithoutAuthorInput
-  votes: VoteUpdateManyInput
+  votes: VoteUpdateManyWithoutAuthorInput
   userSettings: UserSettingsUpdateOneWithoutUserInput
   inbox: MessageUpdateManyWithoutRecipientInput
   outbox: MessageUpdateManyWithoutAuthorInput
@@ -1579,7 +1604,7 @@ input UserUpdateWithoutDecksDataInput {
   password: String
   isAdmin: Boolean
   userInfo: UserInfoUpdateOneWithoutUserInput
-  votes: VoteUpdateManyInput
+  votes: VoteUpdateManyWithoutAuthorInput
   userSettings: UserSettingsUpdateOneWithoutUserInput
   connections: ConnectionUpdateManyWithoutFriendInput
   inbox: MessageUpdateManyWithoutRecipientInput
@@ -1593,7 +1618,7 @@ input UserUpdateWithoutInboxDataInput {
   isAdmin: Boolean
   userInfo: UserInfoUpdateOneWithoutUserInput
   decks: DeckUpdateManyWithoutAuthorInput
-  votes: VoteUpdateManyInput
+  votes: VoteUpdateManyWithoutAuthorInput
   userSettings: UserSettingsUpdateOneWithoutUserInput
   connections: ConnectionUpdateManyWithoutFriendInput
   outbox: MessageUpdateManyWithoutAuthorInput
@@ -1606,7 +1631,7 @@ input UserUpdateWithoutOutboxDataInput {
   isAdmin: Boolean
   userInfo: UserInfoUpdateOneWithoutUserInput
   decks: DeckUpdateManyWithoutAuthorInput
-  votes: VoteUpdateManyInput
+  votes: VoteUpdateManyWithoutAuthorInput
   userSettings: UserSettingsUpdateOneWithoutUserInput
   connections: ConnectionUpdateManyWithoutFriendInput
   inbox: MessageUpdateManyWithoutRecipientInput
@@ -1618,7 +1643,7 @@ input UserUpdateWithoutUserInfoDataInput {
   password: String
   isAdmin: Boolean
   decks: DeckUpdateManyWithoutAuthorInput
-  votes: VoteUpdateManyInput
+  votes: VoteUpdateManyWithoutAuthorInput
   userSettings: UserSettingsUpdateOneWithoutUserInput
   connections: ConnectionUpdateManyWithoutFriendInput
   inbox: MessageUpdateManyWithoutRecipientInput
@@ -1632,7 +1657,20 @@ input UserUpdateWithoutUserSettingsDataInput {
   isAdmin: Boolean
   userInfo: UserInfoUpdateOneWithoutUserInput
   decks: DeckUpdateManyWithoutAuthorInput
-  votes: VoteUpdateManyInput
+  votes: VoteUpdateManyWithoutAuthorInput
+  connections: ConnectionUpdateManyWithoutFriendInput
+  inbox: MessageUpdateManyWithoutRecipientInput
+  outbox: MessageUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateWithoutVotesDataInput {
+  name: String
+  email: String
+  password: String
+  isAdmin: Boolean
+  userInfo: UserInfoUpdateOneWithoutUserInput
+  decks: DeckUpdateManyWithoutAuthorInput
+  userSettings: UserSettingsUpdateOneWithoutUserInput
   connections: ConnectionUpdateManyWithoutFriendInput
   inbox: MessageUpdateManyWithoutRecipientInput
   outbox: MessageUpdateManyWithoutAuthorInput
@@ -1666,6 +1704,11 @@ input UserUpsertWithoutUserInfoInput {
 input UserUpsertWithoutUserSettingsInput {
   update: UserUpdateWithoutUserSettingsDataInput!
   create: UserCreateWithoutUserSettingsInput!
+}
+
+input UserUpsertWithoutVotesInput {
+  update: UserUpdateWithoutVotesDataInput!
+  create: UserCreateWithoutVotesInput!
 }
 
 input UserWhereInput {
@@ -1773,6 +1816,7 @@ input UserWhereUniqueInput {
 type Vote {
   id: ID!
   deck: Deck!
+  author: User!
   quality: Boolean!
 }
 
@@ -1784,12 +1828,18 @@ type VoteConnection {
 
 input VoteCreateInput {
   deck: DeckCreateOneInput!
+  author: UserCreateOneWithoutVotesInput!
   quality: Boolean!
 }
 
-input VoteCreateManyInput {
-  create: [VoteCreateInput!]
+input VoteCreateManyWithoutAuthorInput {
+  create: [VoteCreateWithoutAuthorInput!]
   connect: [VoteWhereUniqueInput!]
+}
+
+input VoteCreateWithoutAuthorInput {
+  deck: DeckCreateOneInput!
+  quality: Boolean!
 }
 
 type VoteEdge {
@@ -1853,13 +1903,9 @@ input VoteSubscriptionWhereInput {
   NOT: [VoteSubscriptionWhereInput!]
 }
 
-input VoteUpdateDataInput {
-  deck: DeckUpdateOneRequiredInput
-  quality: Boolean
-}
-
 input VoteUpdateInput {
   deck: DeckUpdateOneRequiredInput
+  author: UserUpdateOneRequiredWithoutVotesInput
   quality: Boolean
 }
 
@@ -1867,20 +1913,20 @@ input VoteUpdateManyDataInput {
   quality: Boolean
 }
 
-input VoteUpdateManyInput {
-  create: [VoteCreateInput!]
-  update: [VoteUpdateWithWhereUniqueNestedInput!]
-  upsert: [VoteUpsertWithWhereUniqueNestedInput!]
+input VoteUpdateManyMutationInput {
+  quality: Boolean
+}
+
+input VoteUpdateManyWithoutAuthorInput {
+  create: [VoteCreateWithoutAuthorInput!]
   delete: [VoteWhereUniqueInput!]
   connect: [VoteWhereUniqueInput!]
   set: [VoteWhereUniqueInput!]
   disconnect: [VoteWhereUniqueInput!]
+  update: [VoteUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [VoteUpsertWithWhereUniqueWithoutAuthorInput!]
   deleteMany: [VoteScalarWhereInput!]
   updateMany: [VoteUpdateManyWithWhereNestedInput!]
-}
-
-input VoteUpdateManyMutationInput {
-  quality: Boolean
 }
 
 input VoteUpdateManyWithWhereNestedInput {
@@ -1888,15 +1934,20 @@ input VoteUpdateManyWithWhereNestedInput {
   data: VoteUpdateManyDataInput!
 }
 
-input VoteUpdateWithWhereUniqueNestedInput {
-  where: VoteWhereUniqueInput!
-  data: VoteUpdateDataInput!
+input VoteUpdateWithoutAuthorDataInput {
+  deck: DeckUpdateOneRequiredInput
+  quality: Boolean
 }
 
-input VoteUpsertWithWhereUniqueNestedInput {
+input VoteUpdateWithWhereUniqueWithoutAuthorInput {
   where: VoteWhereUniqueInput!
-  update: VoteUpdateDataInput!
-  create: VoteCreateInput!
+  data: VoteUpdateWithoutAuthorDataInput!
+}
+
+input VoteUpsertWithWhereUniqueWithoutAuthorInput {
+  where: VoteWhereUniqueInput!
+  update: VoteUpdateWithoutAuthorDataInput!
+  create: VoteCreateWithoutAuthorInput!
 }
 
 input VoteWhereInput {
@@ -1915,6 +1966,7 @@ input VoteWhereInput {
   id_ends_with: ID
   id_not_ends_with: ID
   deck: DeckWhereInput
+  author: UserWhereInput
   quality: Boolean
   quality_not: Boolean
   AND: [VoteWhereInput!]
