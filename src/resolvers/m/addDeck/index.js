@@ -25,7 +25,11 @@ async function addDeck(parent, { deckList, deckDetails, deckName }, ctx) {
   let deckMap = {};
   let count = 0;
 
-  let cardsArray = deckList.split("\n");
+  let cardsArray = deckList.split("\n").filter(el => {
+    return el !== "";
+  });
+
+  console.log('cardsArray = ', cardsArray, '\n' )
 
   for (const card of cardsArray) {
     // console.log('card = ', card, '\n' )
@@ -74,7 +78,14 @@ async function addDeck(parent, { deckList, deckDetails, deckName }, ctx) {
         console.log("count = ", count, "\n");
       } catch (e) {
         console.log("hello catch block = ", e, "\n");
-        const card = {
+        let card = {};
+        try {
+          card.name = cardName;
+          card.quantity = quantity;
+        } catch(e) {
+          return "error fatal"
+        }
+        card = {
           name: cardName,
           quantity
         };
