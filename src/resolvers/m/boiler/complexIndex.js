@@ -1,14 +1,14 @@
 const bcrypt = require("bcryptjs");
 const mtg = require("mtgsdk");
-const { clearLog } = require("../../../utils");
-const { testDeck, fullTestDeck, testSplitDeck } = require("../boiler/testString");
+const { clearLog } = require("../../../../utils");
+const { testDeck, fullTestDeck, testSplitDeck } = require("../../boiler/testString");
 const {
   nameAndQuant,
   buildCardObj,
   isBasicLand,
   isSplitCard,
   nameAndQuantSplit
-} = require("./utils");
+} = require("../addDeck/utils");
 
 async function addCard(parent, args, ctx){
   let deckMap = {};
