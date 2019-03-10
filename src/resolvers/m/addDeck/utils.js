@@ -8,8 +8,10 @@ function isSplitCard(card) {
 
 function nameAndQuant(c) {
   const [quantity] = c.match(/[0-9]*/);
-  const editCard = c.replace(/ *\([^)]*\) */g, "");
+  const editCard = c.replace(/ *\([^)]*\) */g, "").slice(0, -3);
+  console.log('nameAndQuant: editCard = ', editCard, '\n' )
   const cardName = editCard.replace(/[0-9]/g, "").trim();
+  console.log('nameAndQuant: cardName = ', cardName, '\n' )
   return [quantity, cardName];
 }
 

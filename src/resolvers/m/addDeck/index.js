@@ -67,6 +67,7 @@ async function addDeck(parent, { deckList, deckDetails, deckName }, ctx) {
       let fetchedCard;
       try {
         const [quantity, cardName] = nameAndQuant(card);
+        console.log('cardName = ', cardName, '\n' )
         fetchedCard = await mtg.card.where({
           name: `${cardName}`,
           pageSize: 1
