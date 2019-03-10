@@ -1,11 +1,9 @@
 const { clearLog, getUserId } = require("../../../utils");
 const {
-  didAlreadyVoteQuery,
-  createVoteMutation,
-  updateDeckMutation
-} = require('./graphql');
-
-const { didTheyVoteAlready, createVote } = require('./utils');
+  didTheyVoteAlready,
+  createVote,
+  updateDeck
+} = require('./utils');
 
 async function upVoteDeck(parent, { id, quality }, ctx) {
 
@@ -23,23 +21,9 @@ async function upVoteDeck(parent, { id, quality }, ctx) {
     const createVoteSuccess = await createVote(ctx, id, userId, quality)
   }
 
-  // grab deck to be upvoted
-  const deck = await ctx.prisma.deck({ id });
+  const updateDeckSuccess = await updateDeck(ctx, id, quality);
 
-  let newScore;
-
-  if (quality) {
-    newScore = deck.score + 1;
-  } else {
-    newScore = deck.score - 1;
-  }
-
-  const variables = {
-    id,
-    score: newScore
-  };
-
-  const { updateDeck } = await ctx.prisma.$graphql(updateDeckMutation, variables);
+  console.log('updateDeckSuccess = ', updateDeckSuccess, '\n' )
 
   if (!updateDeck) {
     return false;

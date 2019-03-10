@@ -37,11 +37,36 @@ async function createVote(ctx, deckId, userId, quality) {
   return !!createVote;
 };
 
+async function updateDeck(ctx, deckId, quality) {
+
+  // grab deck to be upvoted
+  const deck = await ctx.prisma.deck({ id: deckId });
+
+  let newScore;
+
+  if (quality) {
+    newScore = deck.score + 1;
+  } else {
+    newScore = deck.score - 1;
+  }
+
+  const updateDeckVars = {
+    id: deckId,
+    score: newScore
+  };
+
+  const { updateDeck } = await ctx.prisma.$graphql(updateDeckMutation, updateDeckVars);
+
+  console.log('updateDeck = ', updateDeck, '\n' )
+
+  return !!updateDeck;
+};
 
 
 
 
 module.exports = {
   didTheyVoteAlready,
-  createVote
+  createVote,
+  updateDeck
 };
