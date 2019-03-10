@@ -3,6 +3,7 @@
 type Query {
   me: User
   allDecks:[Deck!]!
+  singleDeck(deckId: ID!): Deck!
 }
 
 type Mutation {
