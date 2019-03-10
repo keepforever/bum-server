@@ -6,6 +6,10 @@ type Query {
 }
 
 type Mutation {
+  upVoteDeck(    
+    quality: Boolean!
+    id: ID!
+    ): Boolean!
   addDeck(
     deckList: String!
     deckDetails: String!

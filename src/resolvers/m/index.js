@@ -5,11 +5,15 @@ const { userSettings } = require("./userSettings");
 const { sendMessage } = require("./sendMessage");
 const { addCard } = require("./addCard");
 const { addDeck } = require('./addDeck');
+const { upVoteDeck } = require("./upVoteDeck");
 
 
 const m = {
   async addCard(parent, args, ctx) {
     return await addCard(parent, args, ctx);
+  },
+  async upVoteDeck(parent, args, ctx) {
+    return await upVoteDeck(parent, args, ctx);
   },
   async addDeck(parent, args, ctx) {
     return await addDeck(parent, args, ctx);
