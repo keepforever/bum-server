@@ -17,47 +17,65 @@ const didAlreadyVoteQuery = `
   }
   `;
 
-  const createVoteMutation = `
-      mutation($deckId: ID!, $userId: ID!, $quality: Boolean!) {
-        createVote(
-          data: {
-            quality: $quality
-            deck: { connect: { id: $deckId } }
-            author: { connect: { id: $userId } }
-          }
-        ) {
-          id
-          quality
-          deck {
-            deckName
-            score
-          }
+const createVoteMutation = `
+    mutation($deckId: ID!, $userId: ID!, $quality: Boolean!) {
+      createVote(
+        data: {
+          quality: $quality
+          deck: { connect: { id: $deckId } }
+          author: { connect: { id: $userId } }
+        }
+      ) {
+        id
+        quality
+        deck {
+          deckName
+          score
         }
       }
-    `;
+    }
+  `;
 
-    const updateDeckMutation = `
-        mutation($score: Int!, $id: ID!) {
-          updateDeck(
-            data: {
-              score: $score
-            },
-            where: {
-              id: $id,
-            },
-          ) {
-              id
-              deckName
-              deckList
-              deckDetails
-              score
-          }
-        }
-      `;
+const updateDeckMutation = `
+    mutation($score: Int!, $id: ID!) {
+      updateDeck(
+        data: {
+          score: $score
+        },
+        where: {
+          id: $id,
+        },
+      ) {
+          id
+          deckName
+          deckList
+          deckDetails
+          score
+      }
+    }
+  `;
+
+const updateVoteMutation = `
+  mutation($quality: Boolean!, $voteId: ID!) {
+    updateVote(
+      data: {
+        quality: $quality
+      },
+      where: {
+        id: $voteId,
+      },
+    ) {
+        id
+        quality
+    }
+  }
+
+`
 
 
 module.exports = {
   didAlreadyVoteQuery,
   createVoteMutation,
-  updateDeckMutation
+  updateDeckMutation,
+  updateVoteMutation
 };

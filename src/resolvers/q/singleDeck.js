@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const { getUserId, clearLog } = require("../../utils");
 
 async function singleDeck(parent, { deckId }, ctx) {
-  console.log("deckId = ", deckId, "\n");
+  console.log("hello singleDeckQuery 💀", "\n");
 
   const fragment = `
     fragment DeckInfo on Deck {
@@ -21,7 +21,7 @@ async function singleDeck(parent, { deckId }, ctx) {
     `;
   const deck = await ctx.prisma.deck({ id: deckId }).$fragment(fragment);
 
-  console.log("deck = ", deck, "\n");
+  // console.log("deck = ", deck, "\n");
 
   return deck;
 }
@@ -29,8 +29,3 @@ async function singleDeck(parent, { deckId }, ctx) {
 module.exports = {
   singleDeck
 };
-
-// console.log(
-//   'ctx.request.headers = ',
-//   Object.keys(ctx.request.headers), '\n'
-// );

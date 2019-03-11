@@ -1,10 +1,11 @@
 const {
   didAlreadyVoteQuery,
   createVoteMutation,
-  updateDeckMutation
+  updateDeckMutation,
+  updateVoteMutation
 } = require("./graphql");
 
-async function didTheyVoteAlready(ctx, userId, deckId) {
+async function didTheyVoteAlready(ctx, userId, deckId, quality) {
   const didAlreadyVoteVars = {
     deckId,
     userId
@@ -17,7 +18,13 @@ async function didTheyVoteAlready(ctx, userId, deckId) {
 
   const alreadyVoted = votes.length > 0;
 
-  return alreadyVoted;
+  let sameVoteAsBefore;
+
+  if(alreadyVoted) {
+    sameVoteAsBefore = votes[0].quality === quality;
+  }
+
+  return [alreadyVoted, sameVoteAsBefore];
 };
 
 async function createVote(ctx, deckId, userId, quality) {
@@ -45,9 +52,13 @@ async function updateDeck(ctx, deckId, quality) {
   let newScore;
 
   if (quality) {
+    console.log('deck.score = ', deck.score, '\n' )
     newScore = deck.score + 1;
+    console.log('newScore = ', newScore, '\n' )
   } else {
+    console.log('deck.score = ', deck.score, '\n' )
     newScore = deck.score - 1;
+    console.log('newScore = ', newScore, '\n' )
   }
 
   const updateDeckVars = {
@@ -62,11 +73,42 @@ async function updateDeck(ctx, deckId, quality) {
   return !!updateDeck;
 };
 
+async function updateVote(ctx, deckId, userId, quality) {
 
+  // GET VOTE ID //
+  const didAlreadyVoteVars = {
+    deckId,
+    userId
+  };
+  const { votes } = await ctx.prisma.$graphql(
+    didAlreadyVoteQuery,
+    didAlreadyVoteVars
+  );
+  const voteId = votes[0].id;
+  // GET VOTE ID //
 
+  // UPDATE VOTE BY ID //
+  const updateVoteVars = {
+    voteId,
+    quality
+  }
+  const updateVoteSuccess = await ctx.prisma.$graphql(
+    updateVoteMutation,
+    updateVoteVars
+  );
+  console.log('updateVoteSuccess = ', updateVoteSuccess, '\n' )
+  // UPDATE VOTE BY ID //
+
+  // UPDATE DECK SCORE //
+  const updateDeckSuccess = await updateDeck(ctx, deckId, quality)
+  console.log('updateDeckSuccess = ', updateDeckSuccess, '\n' )
+
+  return !!updateDeckSuccess;
+};
 
 module.exports = {
   didTheyVoteAlready,
   createVote,
-  updateDeck
+  updateDeck,
+  updateVote,
 };

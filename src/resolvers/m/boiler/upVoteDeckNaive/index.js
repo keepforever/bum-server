@@ -1,5 +1,5 @@
-const { clearLog, getUserId } = require("../../../utils");
-const { didTheyVoteAlready, createVote, updateDeck, updateVote } = require("./utils");
+const { clearLog, getUserId } = require("../../../../utils");
+const { didTheyVoteAlready, createVote, updateDeck } = require("./utils");
 
 async function upVoteDeck(parent, { deckId, quality }, ctx) {
   const userId = getUserId(ctx);
@@ -8,23 +8,11 @@ async function upVoteDeck(parent, { deckId, quality }, ctx) {
     return "Cannot Up Vote Deck Without Auth Token";
   }
 
-  const [alreadyVoted, sameVoteAsBefore] = await didTheyVoteAlready(
-    ctx,
-    userId,
-    deckId,
-    quality
-  );
+  const alreadyVoted = await didTheyVoteAlready(ctx, userId, deckId);
 
-  if (alreadyVoted && sameVoteAsBefore) {
+  if (!!alreadyVoted) {
     return false;
-  }
-
-  if (alreadyVoted && !sameVoteAsBefore) {
-    console.log('already voted, but dif quality = ', '\n' )
-    const updateVoteSuccess = await updateVote(ctx, deckId, userId, quality);
-  }
-
-  if (!alreadyVoted) {
+  } else {
     const createVoteSuccess = await createVote(ctx, deckId, userId, quality);
   }
 
