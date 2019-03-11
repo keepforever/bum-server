@@ -2,6 +2,7 @@
 
 type Query {
   me: User
+  singleUser(userId: ID!): User
   allDecks:[Deck!]!
   singleDeck(deckId: ID!): Deck!
 }
