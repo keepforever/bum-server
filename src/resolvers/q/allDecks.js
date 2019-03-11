@@ -26,7 +26,7 @@ async function allDecks(parent, args, ctx) {
   // the fragment defined above.
   const allDecks = await ctx.prisma.decks().$fragment(fragment);
 
-  console.log('allDecks = ', allDecks, '\n' )
+  // console.log('allDecks = ', allDecks, '\n' )
 
   return allDecks
 };
