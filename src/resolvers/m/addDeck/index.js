@@ -101,8 +101,9 @@ async function addDeck(parent, { deckList, deckDetails, deckName }, ctx) {
     // this mutation takes the form which the Prisma API would find
     // acceptable
     const mutation = `
-      mutation($deckName: String!, $deckList: String!, $deckDetails: String!, $id: ID!) {
+      mutation($raw: String!, $deckName: String!, $deckList: String!, $deckDetails: String!, $id: ID!) {
         createDeck(data: {
+          raw: $raw,
           deckName: $deckName,
           deckList: $deckList,
           deckDetails: $deckDetails,
@@ -113,6 +114,7 @@ async function addDeck(parent, { deckList, deckDetails, deckName }, ctx) {
           deckList
           deckDetails
           score
+          raw
         }
       }
     `;
@@ -121,7 +123,8 @@ async function addDeck(parent, { deckList, deckDetails, deckName }, ctx) {
       deckList: JSON.stringify(deckMap),
       deckDetails,
       deckName,
-      id
+      id,
+      raw: deckList
     };
 
     const {createDeck} = await ctx.prisma.$graphql(mutation, variables);

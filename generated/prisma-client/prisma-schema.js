@@ -313,6 +313,7 @@ type Deck {
   deckDetails: String!
   deckName: String!
   score: Int!
+  raw: String
 }
 
 type DeckConnection {
@@ -327,6 +328,7 @@ input DeckCreateInput {
   deckDetails: String!
   deckName: String
   score: Int
+  raw: String
 }
 
 input DeckCreateManyWithoutAuthorInput {
@@ -344,6 +346,7 @@ input DeckCreateWithoutAuthorInput {
   deckDetails: String!
   deckName: String
   score: Int
+  raw: String
 }
 
 type DeckEdge {
@@ -362,6 +365,8 @@ enum DeckOrderByInput {
   deckName_DESC
   score_ASC
   score_DESC
+  raw_ASC
+  raw_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -374,6 +379,7 @@ type DeckPreviousValues {
   deckDetails: String!
   deckName: String!
   score: Int!
+  raw: String
 }
 
 input DeckScalarWhereInput {
@@ -441,6 +447,20 @@ input DeckScalarWhereInput {
   score_lte: Int
   score_gt: Int
   score_gte: Int
+  raw: String
+  raw_not: String
+  raw_in: [String!]
+  raw_not_in: [String!]
+  raw_lt: String
+  raw_lte: String
+  raw_gt: String
+  raw_gte: String
+  raw_contains: String
+  raw_not_contains: String
+  raw_starts_with: String
+  raw_not_starts_with: String
+  raw_ends_with: String
+  raw_not_ends_with: String
   AND: [DeckScalarWhereInput!]
   OR: [DeckScalarWhereInput!]
   NOT: [DeckScalarWhereInput!]
@@ -470,6 +490,7 @@ input DeckUpdateDataInput {
   deckDetails: String
   deckName: String
   score: Int
+  raw: String
 }
 
 input DeckUpdateInput {
@@ -478,6 +499,7 @@ input DeckUpdateInput {
   deckDetails: String
   deckName: String
   score: Int
+  raw: String
 }
 
 input DeckUpdateManyDataInput {
@@ -485,6 +507,7 @@ input DeckUpdateManyDataInput {
   deckDetails: String
   deckName: String
   score: Int
+  raw: String
 }
 
 input DeckUpdateManyMutationInput {
@@ -492,6 +515,7 @@ input DeckUpdateManyMutationInput {
   deckDetails: String
   deckName: String
   score: Int
+  raw: String
 }
 
 input DeckUpdateManyWithoutAuthorInput {
@@ -523,6 +547,7 @@ input DeckUpdateWithoutAuthorDataInput {
   deckDetails: String
   deckName: String
   score: Int
+  raw: String
 }
 
 input DeckUpdateWithWhereUniqueWithoutAuthorInput {
@@ -607,6 +632,20 @@ input DeckWhereInput {
   score_lte: Int
   score_gt: Int
   score_gte: Int
+  raw: String
+  raw_not: String
+  raw_in: [String!]
+  raw_not_in: [String!]
+  raw_lt: String
+  raw_lte: String
+  raw_gt: String
+  raw_gte: String
+  raw_contains: String
+  raw_not_contains: String
+  raw_starts_with: String
+  raw_not_starts_with: String
+  raw_ends_with: String
+  raw_not_ends_with: String
   AND: [DeckWhereInput!]
   OR: [DeckWhereInput!]
   NOT: [DeckWhereInput!]

@@ -12,6 +12,7 @@ async function singleDeck(parent, { deckId }, ctx) {
       deckDetails
       deckList
       score
+      raw
       author {
         id
         name

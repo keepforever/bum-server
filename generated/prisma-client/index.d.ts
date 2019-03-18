@@ -348,6 +348,8 @@ export type DeckOrderByInput =
   | "deckName_DESC"
   | "score_ASC"
   | "score_DESC"
+  | "raw_ASC"
+  | "raw_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -503,6 +505,20 @@ export interface DeckWhereInput {
   score_lte?: Int;
   score_gt?: Int;
   score_gte?: Int;
+  raw?: String;
+  raw_not?: String;
+  raw_in?: String[] | String;
+  raw_not_in?: String[] | String;
+  raw_lt?: String;
+  raw_lte?: String;
+  raw_gt?: String;
+  raw_gte?: String;
+  raw_contains?: String;
+  raw_not_contains?: String;
+  raw_starts_with?: String;
+  raw_not_starts_with?: String;
+  raw_ends_with?: String;
+  raw_not_ends_with?: String;
   AND?: DeckWhereInput[] | DeckWhereInput;
   OR?: DeckWhereInput[] | DeckWhereInput;
   NOT?: DeckWhereInput[] | DeckWhereInput;
@@ -903,6 +919,7 @@ export interface DeckCreateWithoutAuthorInput {
   deckDetails: String;
   deckName?: String;
   score?: Int;
+  raw?: String;
 }
 
 export interface VoteCreateManyWithoutAuthorInput {
@@ -926,6 +943,7 @@ export interface DeckCreateInput {
   deckDetails: String;
   deckName?: String;
   score?: Int;
+  raw?: String;
 }
 
 export interface UserCreateOneWithoutDecksInput {
@@ -1105,6 +1123,7 @@ export interface DeckUpdateWithoutAuthorDataInput {
   deckDetails?: String;
   deckName?: String;
   score?: Int;
+  raw?: String;
 }
 
 export interface DeckUpsertWithWhereUniqueWithoutAuthorInput {
@@ -1178,6 +1197,20 @@ export interface DeckScalarWhereInput {
   score_lte?: Int;
   score_gt?: Int;
   score_gte?: Int;
+  raw?: String;
+  raw_not?: String;
+  raw_in?: String[] | String;
+  raw_not_in?: String[] | String;
+  raw_lt?: String;
+  raw_lte?: String;
+  raw_gt?: String;
+  raw_gte?: String;
+  raw_contains?: String;
+  raw_not_contains?: String;
+  raw_starts_with?: String;
+  raw_not_starts_with?: String;
+  raw_ends_with?: String;
+  raw_not_ends_with?: String;
   AND?: DeckScalarWhereInput[] | DeckScalarWhereInput;
   OR?: DeckScalarWhereInput[] | DeckScalarWhereInput;
   NOT?: DeckScalarWhereInput[] | DeckScalarWhereInput;
@@ -1193,6 +1226,7 @@ export interface DeckUpdateManyDataInput {
   deckDetails?: String;
   deckName?: String;
   score?: Int;
+  raw?: String;
 }
 
 export interface VoteUpdateManyWithoutAuthorInput {
@@ -1236,6 +1270,7 @@ export interface DeckUpdateDataInput {
   deckDetails?: String;
   deckName?: String;
   score?: Int;
+  raw?: String;
 }
 
 export interface UserUpdateOneRequiredWithoutDecksInput {
@@ -1650,6 +1685,7 @@ export interface DeckUpdateInput {
   deckDetails?: String;
   deckName?: String;
   score?: Int;
+  raw?: String;
 }
 
 export interface DeckUpdateManyMutationInput {
@@ -1657,6 +1693,7 @@ export interface DeckUpdateManyMutationInput {
   deckDetails?: String;
   deckName?: String;
   score?: Int;
+  raw?: String;
 }
 
 export interface MessageCreateInput {
@@ -2167,6 +2204,7 @@ export interface Deck {
   deckDetails: String;
   deckName: String;
   score: Int;
+  raw?: String;
 }
 
 export interface DeckPromise extends Promise<Deck>, Fragmentable {
@@ -2176,6 +2214,7 @@ export interface DeckPromise extends Promise<Deck>, Fragmentable {
   deckDetails: () => Promise<String>;
   deckName: () => Promise<String>;
   score: () => Promise<Int>;
+  raw: () => Promise<String>;
 }
 
 export interface DeckSubscription
@@ -2187,6 +2226,7 @@ export interface DeckSubscription
   deckDetails: () => Promise<AsyncIterator<String>>;
   deckName: () => Promise<AsyncIterator<String>>;
   score: () => Promise<AsyncIterator<Int>>;
+  raw: () => Promise<AsyncIterator<String>>;
 }
 
 export interface Vote {
@@ -2777,6 +2817,7 @@ export interface DeckPreviousValues {
   deckDetails: String;
   deckName: String;
   score: Int;
+  raw?: String;
 }
 
 export interface DeckPreviousValuesPromise
@@ -2787,6 +2828,7 @@ export interface DeckPreviousValuesPromise
   deckDetails: () => Promise<String>;
   deckName: () => Promise<String>;
   score: () => Promise<Int>;
+  raw: () => Promise<String>;
 }
 
 export interface DeckPreviousValuesSubscription
@@ -2797,6 +2839,7 @@ export interface DeckPreviousValuesSubscription
   deckDetails: () => Promise<AsyncIterator<String>>;
   deckName: () => Promise<AsyncIterator<String>>;
   score: () => Promise<AsyncIterator<Int>>;
+  raw: () => Promise<AsyncIterator<String>>;
 }
 
 export interface MessageSubscriptionPayload {
