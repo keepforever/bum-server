@@ -1,5 +1,6 @@
+const { DECK_FRAGMENT, USER_FRAGMENT } = require("../../f")
 
-const deckConnectionTemplateString = `
+const graphql = `
   query($first: Int!, $after: String) {
     decksConnection(
       first: $first,
@@ -11,8 +12,10 @@ const deckConnectionTemplateString = `
       }
       edges{
         node{
-          id
-          deckName
+          ...DeckInfo
+          author{
+            ...UserInfo
+          }
         }
       }
       aggregate{
@@ -20,8 +23,10 @@ const deckConnectionTemplateString = `
       }
     }
   }
+  ${DECK_FRAGMENT}
+  ${USER_FRAGMENT}
 `;
 
 module.exports = {
-  deckConnectionTemplateString
+  graphql,
 }

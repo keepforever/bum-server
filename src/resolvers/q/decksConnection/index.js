@@ -1,14 +1,14 @@
-const { deckConnectionTemplateString } = require('./graphql')
+const { graphql } = require('./graphql')
 
 async function decksConnection(parent, args, ctx) {
-  console.log('args = ', args, '\n' )
+  console.log('decksConnection args = ', args, '\n' )
 
   const result = await ctx.prisma.$graphql(
-    deckConnectionTemplateString,
+    graphql,
     {...args}
   );
 
-  console.log('result = ', result, '\n' )
+  // console.log('result.decksConnection.edges = ', result.decksConnection.edges, '\n' )
 
   return result.decksConnection
 };
