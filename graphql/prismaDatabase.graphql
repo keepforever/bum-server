@@ -1,0 +1,92 @@
+# these queries and mutations are written to be sent
+# directly to the Prisma server NOT the graphql server.
+#
+# The graphql seen here can be used as the graphql argument in
+# the following:
+#
+# const { votes } = await ctx.prisma.$graphql(
+#   graphql,
+#   vars
+# );
+
+query MyAllDecksConnection {
+  decksConnection(first:31) {
+    pageInfo{
+      hasNextPage
+      endCursor
+    }
+    edges{
+      node{
+        id
+        deckName
+      }
+    }
+    aggregate{
+      count
+    }
+  }
+}
+
+query MyAllDecksConnectionNextPage {
+  decksConnection(first:35, after:"cjt4wlv1m0kij0b9483toprh7") {
+    pageInfo{
+      hasNextPage
+      endCursor
+    }
+    edges{
+      node{
+        id
+        deckName
+      }
+    }
+    aggregate{
+      count
+    }
+  }
+}
+
+query MyDidAlreadyVote {
+  votes(where:{
+    deck:{id:"cjsnk5nj72xc10b23swm3ssnx"},
+    author:{id:"cjsc9h8ujgtw50b09cefxxap2"}
+  }) {
+    id
+    quality
+    author{
+      name
+    }
+  }
+}
+
+mutation MyCreateVote {
+  createVote(
+    data: {
+      deck: { connect: { id: "cjsnk5nj72xc10b23swm3ssnx" } }
+      quality: true
+      author: { connect: { id: "cjsc9h8ujgtw50b09cefxxap2" } }
+    }
+  ) {
+    id
+    quality
+    deck {
+      deckName
+    }
+  }
+}
+
+mutation MyUpVoteDeck {
+  updateDeck(data: { score: 2 }, where: { id: "cjsnk5nj72xc10b23swm3ssnx" }) {
+    id
+    score
+    deckName
+  }
+}
+
+
+query MyAllDecks {
+  decks {
+    deckName
+    id
+    score
+  }
+}

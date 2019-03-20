@@ -2,6 +2,8 @@ const { me } = require("./me");
 const { allDecks } = require("./allDecks");
 const { singleDeck } = require("./singleDeck");
 const { singleUser } = require("./singleUser");
+const { decksConnection } = require("./decksConnection");
+
 
 const q = {
   async me(parent, args, ctx) {
@@ -15,6 +17,9 @@ const q = {
   },
   async singleUser(parent, args, ctx) {
     return await singleUser(parent, args, ctx);
+  },
+  async decksConnection(parent, args, ctx) {
+    return await decksConnection(parent, args, ctx);
   },
 
 };

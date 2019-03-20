@@ -1,7 +1,11 @@
-# import User, Deck, Vote, DeckCreateInput, UserInfo, UserSettings, Message, Connection from "../generated/prisma.graphql"
+# import User, Deck, Vote, DeckCreateInput, UserInfo, UserSettings, Message, Connection, DeckConnection from "../generated/prisma.graphql"
 
 type Query {
   me: User
+  decksConnection(
+    first: Int
+    after: String
+  ): DeckConnection
   singleUser(userId: ID!): User
   allDecks:[Deck!]!
   singleDeck(deckId: ID!): Deck!
