@@ -16,6 +16,9 @@ async function singleUser(parent, { userId }, ctx) {
         deckDetails
         deckList
         score
+        author {
+          id
+        }
       }
     }
     `;
